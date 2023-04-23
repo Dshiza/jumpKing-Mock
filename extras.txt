@@ -1,0 +1,50 @@
+    if (keys.Space.pressed && this.onGround) {
+      //this.acceleration.y = 0;
+
+      if (keys.ArrowLeft.pressed) {
+        this.jumpDirection = "left";
+      } else if (keys.ArrowRight.pressed) {
+        this.jumpDirection = "right";
+      } else this.jumpDirection = "vertical";
+      //this.onGround = false;
+    }
+
+    if (keys.Space.released && !this.onGround) {
+      // Modify the jump height based on the duration of the button press
+
+      this.velocity.y = Math.max(
+        -Character.jumpHeight,
+        (-Character.jumpHeight * jumpDuration) / 500
+      );
+
+      if (this.y <= Character.jumpHeight) this.velocity.y = -this.velocity.y;
+      keys.Space.released = false;
+    }
+    if (
+      !keys.Space.released &&
+      !this.onGround &&
+      this.jumpDirection === "vertical"
+    ) {
+      this.velocity.x = 0;
+    }
+    if (
+      !keys.Space.released &&
+      !this.onGround &&
+      this.jumpDirection === "left"
+    ) {
+      console.log(this.velocity.x);
+      this.velocity.x = -8;
+    }
+    if (
+      !keys.Space.released &&
+      !this.onGround &&
+      this.jumpDirection === "right"
+    ) {
+      console.log(this.velocity.x);
+      this.velocity.x = 8;
+    }
+
+
+
+
+jump code
