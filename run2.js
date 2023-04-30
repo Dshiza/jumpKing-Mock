@@ -31,13 +31,15 @@ const background = new Sprite({
   },
   imgSrc: "./img/jkm1.png",
 });
-
+const player = new Character(50, 50);
+player.resetCharacter();
 function animate() {
   window.requestAnimationFrame(animate);
   ctx.fillStyle = "white";
   ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
   background.update();
+  //player.update();
   //colBlo.line();
   boundaries.forEach((boundary) => {
     boundary.draw();

@@ -51,7 +51,7 @@ class CollisionBlock {
 class Boundary {
   static width = (8 * CANVAS_WIDTH) / 2080; //0.6745
   static height = (8 * CANVAS_HEIGHT) / 1568; //0.607
-  constructor(position, image) {
+  constructor(position) {
     this.position = position;
     this.width = 8;
     this.height = 8;

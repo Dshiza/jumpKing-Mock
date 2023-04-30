@@ -1,0 +1,3 @@
+    1) Trocar foreach por for - speed
+    2) Makes collision funtion
+    3) change apply gravity 

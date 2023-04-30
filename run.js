@@ -1,9 +1,3 @@
-const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d");
-
-const CANVAS_WIDTH = (canvas.width = 1400);
-const CANVAS_HEIGHT = (canvas.height = 950);
-
 function setupCanvas() {
   // Set the canvas position to "absolute"
   canvas.style.position = "absolute";
@@ -29,8 +23,8 @@ const scaledCanvas = {
 };
 
 setupCanvas();
-const character = new Character(10, 10);
-character.resetCharacter();
+const character = new Character(200, 0);
+//character.resetCharacter();
 const background = new Sprite({
   position: {
     x: 0,
@@ -74,7 +68,7 @@ window.addEventListener("keydown", (event) => {
       console.log("Jump!");
       if (jumpStartTime === null) {
         jumpStartTime = Date.now();
-        console.log("just pressed" + jumpStartTime);
+        //console.log("just pressed" + jumpStartTime);
         keys.Space.pressed = true;
       }
       break;
@@ -98,7 +92,7 @@ window.addEventListener("keyup", (event) => {
         keys.Space.pressed = false;
         keys.Space.released = true;
         character.onGround = false;
-        console.log("after release - " + jumpDuration);
+        //console.log("after release - " + jumpDuration);
         jumpStartTime = null;
       }
 

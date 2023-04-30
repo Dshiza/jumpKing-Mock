@@ -8,7 +8,7 @@ let map1_2d = [];
 for (let i = 0; i < map1Collisions.length; i += 260) {
   map1_2d.push(map1Collisions.slice(i, i + 260));
 }
-console.log(map1_2d);
+
 const boundaries = [];
 map1_2d.forEach((row, i) => {
   row.forEach((symbol, j) => {
@@ -21,3 +21,4 @@ map1_2d.forEach((row, i) => {
       );
   });
 });
+console.log(boundaries);

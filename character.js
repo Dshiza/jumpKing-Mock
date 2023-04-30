@@ -26,7 +26,7 @@ class Character {
     this.width = 85;
     this.height = 105;
 
-    this.onGround = true;
+    this.onGround = false;
     this.jumpDirection = null;
     this.isStill = false;
     this.isRunning = false;
@@ -72,21 +72,18 @@ class Character {
   }
 
   applyGravity() {
-    if (
-      !this.onGround &&
-      this.y + this.height + this.velocity.y < CANVAS_HEIGHT
-    ) {
+    if (!this.onGround) {
       this.acceleration.y += GRAVITY;
       this.velocity.y = Math.min(
         this.velocity.y + this.acceleration.y,
         terminalVelocity
       );
-    } else {
+    } /*else {
       this.velocity.y = 0;
       this.acceleration.y = 0;
       this.y = CANVAS_HEIGHT - this.height;
       this.onGround = true;
-    }
+    }*/
   }
 
   moveLeft() {
@@ -136,7 +133,7 @@ class Character {
       if (this.jumpDirection == "left") this.velocity.x = -10;
       else if (this.jumpDirection == "right") this.velocity.x = 10;
       else this.velocity.x = 0;
-      console.log("vel y in jump - " + this.velocity.y);
+      //console.log("vel y in jump - " + this.velocity.y);
       currentSpeedY = this.velocity.y;
       currentSpeedX = this.velocity.x;
     }
@@ -150,8 +147,37 @@ class Character {
 
   updateCharacterState() {}
 
+  handleCollision(boundaries) {
+    for (let i = 0; i < boundaries.length; i++) {
+      const boundary = boundaries[i];
+
+      console.log(
+        `this.onGround: ${this.onGround},this.y: ${this.y}, this.velocity.y: ${this.velocity.y}, this.acceleration.y: ${this.acceleration.y}, this.height: ${this.height}, this.width: ${this.width}, boundary.position.y: ${boundary.position.y}, this.x: ${this.x}, boundary.position.x: ${boundary.position.x}`
+      );
+
+      if (
+        this.y + this.height + this.velocity.y >= boundary.position.y &&
+        boundary.position.y + boundary.height > this.y &&
+        this.x + this.width >= boundary.position.x &&
+        boundary.position.x + boundary.width > this.x
+      ) {
+        this.velocity.y = 0;
+        this.acceleration.y = 0;
+        this.y = boundary.position.y - this.height;
+        this.onGround = true;
+        console.log("BREAKING!!!");
+        break;
+      }
+    }
+  }
+
+  drawBoundaries(boundaries) {
+    for (let i = 0; i < boundaries.length; i++) {
+      const boundary = boundaries[i];
+      boundary.draw();
+    }
+  }
   update() {
-    this.draw();
     this.x += this.velocity.x;
     //this.velocity.y += this.aceleration.y;
 
@@ -164,5 +190,9 @@ class Character {
     this.jump();
     this.applyGravity();
     //tests
+    this.handleCollision(boundaries);
+    // console.log("this.y=" + this.y + "this.x=" + this.x);
+    //this.drawBoundaries(boundaries);
+    this.draw();
   }
 }
