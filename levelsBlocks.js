@@ -21,4 +21,7 @@ map1_2d.forEach((row, i) => {
       );
   });
 });
-console.log(boundaries);
+console.log(map1_2d);
+
+let levelLines = [];
+for (let i = 0; i < boundaries.length; i++) {}

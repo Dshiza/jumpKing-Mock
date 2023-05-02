@@ -150,11 +150,11 @@ class Character {
   handleCollision(boundaries) {
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
-
+      /*
       console.log(
         `this.onGround: ${this.onGround},this.y: ${this.y}, this.velocity.y: ${this.velocity.y}, this.acceleration.y: ${this.acceleration.y}, this.height: ${this.height}, this.width: ${this.width}, boundary.position.y: ${boundary.position.y}, this.x: ${this.x}, boundary.position.x: ${boundary.position.x}`
-      );
-
+      );*/
+      /*
       if (
         this.y + this.height + this.velocity.y >= boundary.position.y &&
         boundary.position.y + boundary.height > this.y &&
@@ -165,9 +165,8 @@ class Character {
         this.acceleration.y = 0;
         this.y = boundary.position.y - this.height;
         this.onGround = true;
-        console.log("BREAKING!!!");
         break;
-      }
+      }*/
     }
   }
 
@@ -177,6 +176,33 @@ class Character {
       boundary.draw();
     }
   }
+
+  /**********************************
+
+
+
+
+***
+*****
+**
+*/
+
+  IsMovingUp() {
+    return this.velocity.y < 0;
+  }
+
+  IsMovingDown() {
+    return this.velocity.y > 0;
+  }
+
+  IsMovingLeft() {
+    return this.velocity.x < 0;
+  }
+
+  IsMovingRight() {
+    return this.velocity.x > 0;
+  }
+
   update() {
     this.x += this.velocity.x;
     //this.velocity.y += this.aceleration.y;
