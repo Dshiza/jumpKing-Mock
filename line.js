@@ -16,4 +16,9 @@ class Line {
       this.x2 = temp;
     } // y coordinate isn't necessary, right?!
   }
+
+  draw(width, height) {
+    ctx.fillStyle = "red";
+    ctx.fillRect(this.x1, this.y1, this.x2 - this.x1, height);
+  }
 }

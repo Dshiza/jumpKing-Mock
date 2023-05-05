@@ -173,7 +173,7 @@ class Character {
   drawBoundaries(boundaries) {
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
-      boundary.draw();
+      boundary.draw(0, Boundary.height);
     }
   }
 
@@ -216,9 +216,9 @@ class Character {
     this.jump();
     this.applyGravity();
     //tests
-    this.handleCollision(boundaries);
+    //this.handleCollision(boundaries);
     // console.log("this.y=" + this.y + "this.x=" + this.x);
-    //this.drawBoundaries(boundaries);
+    this.drawBoundaries(boundaries);
     this.draw();
   }
 }
