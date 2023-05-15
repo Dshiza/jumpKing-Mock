@@ -173,7 +173,13 @@ class Character {
   drawBoundaries(boundaries) {
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
-      boundary.draw(0, Boundary.height);
+      //console.log(boundary.vertical + boundary.horizontal);
+      if (boundary.vertical) {
+        boundary.drawVertical(Boundary.width);
+      }
+      if (boundary.horizontal) {
+        boundary.drawHorizontal(Boundary.height);
+      }
     }
   }
 

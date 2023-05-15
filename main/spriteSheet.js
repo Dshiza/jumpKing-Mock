@@ -1,3 +1,4 @@
+// Still needs work Should agreggate every sprite
 // Import Spritesheet.js library
 import { SpriteSheet } from "spritesheet.js";
 
