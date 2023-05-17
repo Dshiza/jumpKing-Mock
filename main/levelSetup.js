@@ -1,14 +1,12 @@
 let levels = [];
 
 //first map
-//let colBlo = new CollisionBlock(1, 2, 3, 4);
-//colBlo.lines.push(new Line(600, 600, 50, 50));
 let map1_2d = [];
 
 for (let i = 0; i < map1Collisions.length; i += 260) {
   map1_2d.push(map1Collisions.slice(i, i + 260));
 }
-const lines = [];
+
 /*
 map1_2d.forEach((row, i) => {
   row.forEach((symbol, j) => {
@@ -23,13 +21,9 @@ map1_2d.forEach((row, i) => {
 });
 */
 
-let levelLines = [];
-
 //Creating lines for the level
+const lines = [];
 // Creating horizontal lines -- code looks bad, feelsBadMan
-let verticalInitPoints = [];
-
-//Creating Horizontal lines
 for (let i = 0; i < map1_2d.length; i++) {
   let startHorizontal = null,
     endHorizontal = null;
@@ -89,12 +83,14 @@ for (let i = 0; i < map1_2d[0].length; i++) {
     lines.push(new Line(startVertical, endVertical));
   }
 }
+
+// NEED CODE FOR DIAGONAL LINES MOST LIKELY, will see when it appears in maps
 console.log(lines);
-let boundaries = lines.filter((element) => {
+let newLevel = new Level();
+newLevel.lines = lines.filter((element) => {
   return !(element.x2 - element.x1 < 7 && element.y2 - element.y1 < 7);
 });
-
+levels.push(newLevel);
 //is this it
 console.log("is this it");
-console.log(boundaries);
-console.log(Boundary.height);
+console.log(newLevel.lines);

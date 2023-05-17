@@ -148,13 +148,11 @@ class Character {
   updateCharacterState() {}
 
   handleCollision(boundaries) {
-    for (let i = 0; i < boundaries.length; i++) {
-      const boundary = boundaries[i];
-      /*
+    /*
       console.log(
         `this.onGround: ${this.onGround},this.y: ${this.y}, this.velocity.y: ${this.velocity.y}, this.acceleration.y: ${this.acceleration.y}, this.height: ${this.height}, this.width: ${this.width}, boundary.position.y: ${boundary.position.y}, this.x: ${this.x}, boundary.position.x: ${boundary.position.x}`
       );*/
-      /*
+    /*
       if (
         this.y + this.height + this.velocity.y >= boundary.position.y &&
         boundary.position.y + boundary.height > this.y &&
@@ -166,6 +164,23 @@ class Character {
         this.y = boundary.position.y - this.height;
         this.onGround = true;
         break;
+      }*/
+  }
+  handleCollision(boundaries) {
+    // Iterate through each boundary
+    for (let i = 0; i < boundaries.length; i++) {
+      const boundary = boundaries[i];
+      /*
+      // Check if the player collides with the boundary
+      if (player.collidesWith(boundary)) {
+        // Handle the collision based on the boundary type
+        if (boundary.type === "horizontal") {
+          player.handleHorizontalCollision(boundary);
+        } else if (boundary.type === "vertical") {
+          player.handleVerticalCollision(boundary);
+        } else if (boundary.type === "diagonal") {
+          player.handleDiagonalCollision(boundary);
+        }
       }*/
     }
   }
@@ -182,16 +197,6 @@ class Character {
       }
     }
   }
-
-  /**********************************
-
-
-
-
-***
-*****
-**
-*/
 
   IsMovingUp() {
     return this.velocity.y < 0;
@@ -222,9 +227,9 @@ class Character {
     this.jump();
     this.applyGravity();
     //tests
-    //this.handleCollision(boundaries);
+    this.handleCollision(levels[0].lines);
     // console.log("this.y=" + this.y + "this.x=" + this.x);
-    this.drawBoundaries(boundaries);
+    this.drawBoundaries(levels[0].lines);
     this.draw();
   }
 }
