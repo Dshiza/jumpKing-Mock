@@ -85,7 +85,6 @@ for (let i = 0; i < map1_2d[0].length; i++) {
 }
 
 // NEED CODE FOR DIAGONAL LINES MOST LIKELY, will see when it appears in maps
-console.log(lines);
 let newLevel = new Level();
 newLevel.lines = lines.filter((element) => {
   return !(element.x2 - element.x1 < 7 && element.y2 - element.y1 < 7);
@@ -94,3 +93,8 @@ levels.push(newLevel);
 //is this it
 console.log("is this it");
 console.log(newLevel.lines);
+
+// Insert the lines into the quadtree.
+levels[0].lines.forEach((line) => {
+  quadtree.insert(line);
+});

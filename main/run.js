@@ -24,7 +24,7 @@ const scaledCanvas = {
 
 setupCanvas();
 const character = new Character(200, 0);
-//character.resetCharacter();
+character.resetCharacter();
 const background = new Sprite({
   position: {
     x: 0,

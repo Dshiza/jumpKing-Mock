@@ -1,4 +1,5 @@
 //Constants affecting the character
+
 const GRAVITY = 0.85;
 const characterImage = new Image();
 const maxJumpTimer = 30;
@@ -78,12 +79,12 @@ class Character {
         this.velocity.y + this.acceleration.y,
         terminalVelocity
       );
-    } /*else {
+    } else {
       this.velocity.y = 0;
       this.acceleration.y = 0;
       this.y = CANVAS_HEIGHT - this.height;
       this.onGround = true;
-    }*/
+    }
   }
 
   moveLeft() {
@@ -147,42 +148,12 @@ class Character {
 
   updateCharacterState() {}
 
-  handleCollision(boundaries) {
+  handleCollision(levelLines) {
+    // input: array levels has n level(object), with many parameters, one being the lines array
     /*
       console.log(
         `this.onGround: ${this.onGround},this.y: ${this.y}, this.velocity.y: ${this.velocity.y}, this.acceleration.y: ${this.acceleration.y}, this.height: ${this.height}, this.width: ${this.width}, boundary.position.y: ${boundary.position.y}, this.x: ${this.x}, boundary.position.x: ${boundary.position.x}`
       );*/
-    /*
-      if (
-        this.y + this.height + this.velocity.y >= boundary.position.y &&
-        boundary.position.y + boundary.height > this.y &&
-        this.x + this.width >= boundary.position.x &&
-        boundary.position.x + boundary.width > this.x
-      ) {
-        this.velocity.y = 0;
-        this.acceleration.y = 0;
-        this.y = boundary.position.y - this.height;
-        this.onGround = true;
-        break;
-      }*/
-  }
-  handleCollision(boundaries) {
-    // Iterate through each boundary
-    for (let i = 0; i < boundaries.length; i++) {
-      const boundary = boundaries[i];
-      /*
-      // Check if the player collides with the boundary
-      if (player.collidesWith(boundary)) {
-        // Handle the collision based on the boundary type
-        if (boundary.type === "horizontal") {
-          player.handleHorizontalCollision(boundary);
-        } else if (boundary.type === "vertical") {
-          player.handleVerticalCollision(boundary);
-        } else if (boundary.type === "diagonal") {
-          player.handleDiagonalCollision(boundary);
-        }
-      }*/
-    }
   }
 
   drawBoundaries(boundaries) {
@@ -228,8 +199,74 @@ class Character {
     this.applyGravity();
     //tests
     this.handleCollision(levels[0].lines);
+    const collision = collisionDetector.checkCollision(
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
+
+    if (collision) {
+      // Handle collision based on the specific requirements of your game
+      // Adjust character's position, velocity, trigger animations, etc.
+    }
     // console.log("this.y=" + this.y + "this.x=" + this.x);
+    // Draw lines of level
     this.drawBoundaries(levels[0].lines);
     this.draw();
   }
 }
+
+/*
+**
+
+
+      if (
+        this.y + this.height + this.velocity.y >= boundary.position.y &&
+        boundary.position.y + boundary.height > this.y &&
+        this.x + this.width >= boundary.position.x &&
+        boundary.position.x + boundary.width > this.x
+      ) {
+        this.velocity.y = 0;
+        this.acceleration.y = 0;
+        this.y = boundary.position.y - this.height;
+        this.onGround = true;
+        
+      }
+
+
+
+
+
+     /*
+      // Check if the player collides with the boundary
+      if (player.collidesWith(boundary)) {
+        // Handle the collision based on the boundary type
+        if (boundary.type === "horizontal") {
+          player.handleHorizontalCollision(boundary);
+        } else if (boundary.type === "vertical") {
+          player.handleVerticalCollision(boundary);
+        } else if (boundary.type === "diagonal") {
+          player.handleDiagonalCollision(boundary);
+        }
+      }
+      
+      
+      // This is pre applygravity
+       if (
+      !this.onGround &&
+      this.y + this.height + this.velocity.y < CANVAS_HEIGHT
+    ) {
+      this.acceleration.y += GRAVITY;
+      this.velocity.y = Math.min(
+        this.velocity.y + this.acceleration.y,
+        terminalVelocity
+      );
+    } else {
+      this.velocity.y = 0;
+      this.acceleration.y = 0;
+      this.y = CANVAS_HEIGHT - this.height;
+      this.onGround = true;
+    }
+      
+      */
