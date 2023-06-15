@@ -1,6 +1,10 @@
 class CollisionDetector {
   constructor(quadtree) {
     this.quadtree = quadtree; // Quadtree containing boundaries for collision detection
+    this.leftHit = false;
+    this.rightHit = false;
+    this.topHit = false;
+    this.bottomHit = false;
   }
 
   checkCollision(characterX, characterY, characterWidth, characterHeight) {
@@ -25,6 +29,10 @@ class CollisionDetector {
       // Collision detected
       return true;
     }
+    //left
+    //right
+    //top
+    //bottom
 
     // No collision detected
     return false;

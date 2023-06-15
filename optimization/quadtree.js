@@ -48,7 +48,7 @@ class Quadtree {
         this.southeast.insert(point) ||
         this.southwest.insert(point)
       );
-    }
+    } 
   }
 
   query(range, found = []) {

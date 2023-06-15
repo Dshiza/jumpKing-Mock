@@ -21,7 +21,7 @@ map1_2d.forEach((row, i) => {
 });
 */
 
-//Creating lines for the level
+//Creating lines for the level - brute force
 const lines = [];
 // Creating horizontal lines -- code looks bad, feelsBadMan
 for (let i = 0; i < map1_2d.length; i++) {
