@@ -13,6 +13,38 @@ class Boundary {
   }
 }
 
+class Rectangle {
+  constructor(x, y, width, height) {
+    this.x = x; // X-coordinate of the top-left corner of the rectangle
+    this.y = y; // Y-coordinate of the top-left corner of the rectangle
+    this.width = width; // Width of the rectangle
+    this.height = height; // Height of the rectangle
+  }
+
+  containsPoint(point) {
+    // Check if a given point is inside the rectangle
+    return (
+      point.x >= this.x &&
+      point.x <= this.x + this.width &&
+      point.y >= this.y &&
+      point.y <= this.y + this.height
+    );
+  }
+
+  intersects(range) {
+    // Check if this rectangle intersects with another rectangle
+    return !(
+      range.x > this.x + this.width ||
+      range.x + range.width < this.x ||
+      range.y > this.y + this.height ||
+      range.y + range.height < this.y
+    );
+  }
+
+  // Other methods for the Rectangle class can be added as needed
+}
+
+//Line should be hereditate using extends
 class Line {
   constructor(start, end) {
     this.x1 = start.x;
@@ -39,6 +71,8 @@ class Line {
     } // y coordinate isn't necessary, right?!
   }
 
+  // If i want to apply width and height with x1,x2,y1,y2
+  // I need to make points in order because fillRect treats width and height as absolute values - "No backwards rectangles"
   drawVertical(width) {
     ctx.fillStyle = "red";
     ctx.fillRect(this.x1, this.y1, width, this.y2 - this.y1);
