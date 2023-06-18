@@ -92,7 +92,7 @@ newLevel.lines = lines.filter((element) => {
 levels.push(newLevel);
 //is this it
 //console.log("is this it");
-//console.log(newLevel.lines);
+console.log(newLevel.lines);
 
 // Insert the lines into the quadtree.
 levels[0].lines.forEach((line) => {

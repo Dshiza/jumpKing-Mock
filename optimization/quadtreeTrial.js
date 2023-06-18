@@ -29,11 +29,10 @@ class quadtreeTrial {
   }
 
   insert(line) {
-    /*
-        // If the point is outside the boundary of this Quadtree, ignore it
-        if (!this.boundary.containsPoint(point)) {
-        return false;
-      }*/
+    // If the point is outside the boundary of this Quadtree, ignore it
+    if (!this.boundary.containsLine(line)) {
+      return false;
+    }
 
     if (this.lines.length < this.capacity) {
       this.lines.push(line);
@@ -60,11 +59,13 @@ class quadtreeTrial {
     );
   }
 
-  traversal() {
-    if (this.divided == true) {
-      console.log(this.topLeft.lines);
-    } else {
-      console.log(this.lines);
+  traverse() {
+    console.log(this.lines);
+    if (this.divided) {
+      this.topLeft.traverse();
+      this.topRight.traverse();
+      this.bottomLeft.traverse();
+      this.bottomRight.traverse();
     }
   }
 }
