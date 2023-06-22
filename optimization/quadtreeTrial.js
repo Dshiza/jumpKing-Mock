@@ -1,3 +1,5 @@
+// Data structure
+
 class quadtreeTrial {
   constructor(boundary, capacity) {
     this.boundary = boundary;
@@ -66,6 +68,47 @@ class quadtreeTrial {
       this.topRight.traverse();
       this.bottomLeft.traverse();
       this.bottomRight.traverse();
+    }
+  }
+
+  findQuadrant(mouseX, mouseY) {
+    if (
+      mouseX >= this.boundary.x &&
+      mouseX <= this.boundary.x + this.boundary.width &&
+      mouseY >= this.boundary.y &&
+      mouseY <= this.boundary.y + this.boundary.height
+    ) {
+      if (!this.divided) {
+        return this.boundary;
+      } else {
+        let result = null;
+
+        result =
+          this.topLeft.findQuadrant(mouseX, mouseY) ||
+          this.topRight.findQuadrant(mouseX, mouseY) ||
+          this.bottomLeft.findQuadrant(mouseX, mouseY) ||
+          this.bottomRight.findQuadrant(mouseX, mouseY);
+
+        if (result) {
+          return result;
+        }
+      }
+    }
+    return false;
+  }
+
+  paint() {
+    renderQuadtree({
+      x: this.boundary.x,
+      y: this.boundary.y,
+      width: this.boundary.width,
+      height: this.boundary.height,
+    });
+    if (this.divided) {
+      this.topLeft.paint();
+      this.topRight.paint();
+      this.bottomLeft.paint();
+      this.bottomRight.paint();
     }
   }
 }
