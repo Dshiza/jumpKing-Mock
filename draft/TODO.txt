@@ -4,3 +4,9 @@ TODO:
 2)tranverse using player position
 3)return nodes that are in players position
 
+Major:
+ - verificaar se player position esta no quadrante
+ - se sim:
+    - ponto initial e ponto inicial + final dao linha se intercetar
+    - 
+

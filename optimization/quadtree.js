@@ -51,25 +51,14 @@ class Quadtree {
     }
   }
 
-  query(range, found = []) {
-    if (!this.boundary.intersects(range)) {
-      return found;
-    } else {
-      for (const point of this.points) {
-        if (range.containsPoint(point)) {
-          found.push(point);
-        }
-      }
-
-      if (this.divided) {
-        this.topLeft.query(range, found);
-        this.topRight.query(range, found);
-        this.bottomLeft.query(range, found);
-        this.bottomRight.query(range, found);
-      }
-
-      return found;
-    }
+  query(characterPos){
+    /*
+    if( characterPos.x>= this.boundary.x &&
+      characterPos.x <= this.boundary.x + this.boundary.width &&
+      characterPos.y >= this.boundary.y &&
+      characterPos.y <= this.boundary.y + this.boundary.height){
+        
+      }*/ 
   }
 
   queryLine(line, found = []) {
@@ -94,7 +83,7 @@ class Quadtree {
   }
 
   // Get the closest point on a line to the player's position.
-  getClosestPoint(line) {
+  getClosestLine(line) {
     const dx = line.x2 - line.x1;
     const dy = line.y2 - line.y1;
     const t =
@@ -148,8 +137,12 @@ class Quadtree {
     );
   }
 
-  traverse() {
+  traverse(characterPos) {
     console.log(this.lines);
+    // comparar em relacao aos pontos iniciais das linhas de cada
+    //if player position in quadrant return lines
+    //if player
+    
     if (this.divided) {
       this.topLeft.traverse();
       this.topRight.traverse();
