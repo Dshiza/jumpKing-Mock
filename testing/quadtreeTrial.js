@@ -71,6 +71,26 @@ class quadtreeTrial {
     }
   }
 
+  divise(func, params = [], operator = "||") {
+    const operators = {
+      "||": (a, b) => a || b,
+      "&&": (a, b) => a && b,
+      // Add more operators as needed
+    };
+
+    const operatorFn = operators[operator];
+    if (!operatorFn) {
+      throw new Error("Invalid operator specified");
+    }
+
+    return operatorFn(
+      operatorFn(this.topLeft[func](...params), this.topRight[func](...params)),
+      operatorFn(
+        this.bottomLeft[func](...params),
+        this.bottomRight[func](...params)
+      )
+    );
+  }
   findQuadrant(mouseX, mouseY) {
     if (
       mouseX >= this.boundary.x &&
@@ -83,12 +103,8 @@ class quadtreeTrial {
       } else {
         let result = null;
 
-        result =
-          this.topLeft.findQuadrant(mouseX, mouseY) ||
-          this.topRight.findQuadrant(mouseX, mouseY) ||
-          this.bottomLeft.findQuadrant(mouseX, mouseY) ||
-          this.bottomRight.findQuadrant(mouseX, mouseY);
-
+        result = this.divise("findQuadrant", [mouseX, mouseY]);
+        console.log(result);
         if (result) {
           return result;
         }

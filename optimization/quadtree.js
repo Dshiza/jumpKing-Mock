@@ -4,7 +4,7 @@ class Quadtree {
   constructor(boundary, capacity) {
     this.boundary = boundary; // The boundary of this Quadtree
     this.capacity = capacity; // The maximum number of objects in this Quadtree before it splits
-    this.points = []; // The points stored in this Quadtree (empty initially)
+    this.lines = []; // The points stored in this Quadtree (empty initially)
     this.divided = false; // Whether this Quadtree has been divided into sub-Quadtrees yet
   }
 
@@ -14,41 +14,41 @@ class Quadtree {
     const w = this.boundary.width / 2;
     const h = this.boundary.height / 2;
 
-    const ne = new Rectangle(x + w, y, w, h);
-    const nw = new Rectangle(x, y, w, h);
-    const se = new Rectangle(x + w, y + h, w, h);
-    const sw = new Rectangle(x, y + h, w, h);
+    // New areas for down branch nodes
+    const topLeft = new Rectangle(x, y, w, h);
+    const topRight = new Rectangle(x + w, y, w, h);
+    const bottomLeft = new Rectangle(x, y + h, w, h);
+    const bottomRight = new Rectangle(x + w, y + h, w, h);
 
-    this.northeast = new Quadtree(ne, this.capacity);
-    this.northwest = new Quadtree(nw, this.capacity);
-    this.southeast = new Quadtree(se, this.capacity);
-    this.southwest = new Quadtree(sw, this.capacity);
+    // New nodes
+    this.topLeft = new quadtreeTrial(topLeft, this.capacity);
+    this.topRight = new quadtreeTrial(topRight, this.capacity);
+    this.bottomLeft = new quadtreeTrial(bottomLeft, this.capacity);
+    this.bottomRight = new quadtreeTrial(bottomRight, this.capacity);
 
+    // Does this node have branches?
     this.divided = true;
   }
-  // Inserts a point into this Quadtree
-  insert(point) {
+  insert(line) {
     // If the point is outside the boundary of this Quadtree, ignore it
-    if (!this.boundary.containsPoint(point)) {
+    if (!this.boundary.containsLine(line)) {
       return false;
     }
-    // If this Quadtree has not yet reached capacity, add the point to its list of points
-    if (this.points.length < this.capacity) {
-      this.points.push(point);
+
+    if (this.lines.length < this.capacity) {
+      this.lines.push(line);
       return true;
     } else {
-      // If this Quadtree has not yet been divided, split it into four sub-Quadtrees
-      if (!this.divided) {
-        this.subdivide();
-      }
-      // Insert the point into each sub-Quadtree or not and ignore it
+      // if capacity full needs to subdivide the node and put those new lines in a lower branch
+      if (!this.divided) this.subdivide();
+
       return (
-        this.northeast.insert(point) ||
-        this.northwest.insert(point) ||
-        this.southeast.insert(point) ||
-        this.southwest.insert(point)
+        this.topLeft.insert(line) ||
+        this.topRight.insert(line) ||
+        this.bottomLeft.insert(line) ||
+        this.bottomRight.insert(line)
       );
-    } 
+    }
   }
 
   query(range, found = []) {
@@ -62,10 +62,10 @@ class Quadtree {
       }
 
       if (this.divided) {
-        this.northeast.query(range, found);
-        this.northwest.query(range, found);
-        this.southeast.query(range, found);
-        this.southwest.query(range, found);
+        this.topLeft.query(range, found);
+        this.topRight.query(range, found);
+        this.bottomLeft.query(range, found);
+        this.bottomRight.query(range, found);
       }
 
       return found;
@@ -83,10 +83,10 @@ class Quadtree {
       }
 
       if (this.divided) {
-        this.northeast.queryLine(line, found);
-        this.northwest.queryLine(line, found);
-        this.southeast.queryLine(line, found);
-        this.southwest.queryLine(line, found);
+        this.topLeft.queryLine(line, found);
+        this.topRight.queryLine(line, found);
+        this.bottomLeft.queryLine(line, found);
+        this.bottomRight.queryLine(line, found);
       }
 
       return found;
@@ -116,6 +116,68 @@ class Quadtree {
     const dx = x2 - x1;
     const dy = y2 - y1;
     return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  divise(func, params = [], operator = "||") {
+    const operators = {
+      "||": (a, b) => a || b,
+      "&&": (a, b) => a && b,
+      // Add more operators as needed
+    };
+
+    const operatorFn = operators[operator];
+    if (!operatorFn) {
+      throw new Error("Invalid operator specified");
+    }
+
+    return operatorFn(
+      operatorFn(this.topLeft[func](...params), this.topRight[func](...params)),
+      operatorFn(
+        this.bottomLeft[func](...params),
+        this.bottomRight[func](...params)
+      )
+    );
+  }
+
+  hasChildren() {
+    return (
+      this.topLeft !== null ||
+      this.topRight !== null ||
+      this.bottomLeft !== null ||
+      this.bottomRight !== null
+    );
+  }
+
+  traverse() {
+    console.log(this.lines);
+    if (this.divided) {
+      this.topLeft.traverse();
+      this.topRight.traverse();
+      this.bottomLeft.traverse();
+      this.bottomRight.traverse();
+    }
+  }
+
+  findQuadrant(mouseX, mouseY) {
+    if (
+      mouseX >= this.boundary.x &&
+      mouseX <= this.boundary.x + this.boundary.width &&
+      mouseY >= this.boundary.y &&
+      mouseY <= this.boundary.y + this.boundary.height
+    ) {
+      if (!this.divided) {
+        return this.boundary;
+      } else {
+        let result = null;
+
+        result = this.divise("findQuadrant", [mouseX, mouseY]);
+
+        if (result) {
+          return result;
+        }
+      }
+    }
+    return false;
   }
 }
 

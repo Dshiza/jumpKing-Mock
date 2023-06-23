@@ -1,3 +1,6 @@
-1) limpar codigo
-2) Decifrar uma maneira para fazer ;inhas verticais inves de horizontais
-3) Ler e limpar Pomodoro App
+
+TODO:
+1)Arranjar maneira de retirar linhas do tranverse e fazer return caso haja divided
+2)tranverse using player position
+3)return nodes that are in players position
+
