@@ -51,21 +51,24 @@ class Quadtree {
     }
   }
 
-  query(characterPos){
-    /*
-    if( characterPos.x>= this.boundary.x &&
-      characterPos.x <= this.boundary.x + this.boundary.width &&
-      characterPos.y >= this.boundary.y &&
-      characterPos.y <= this.boundary.y + this.boundary.height){
+  query(characterDim, found=[]){
+    let player = new Rectangle(characterDim.x, characterDim.y, characterDim.width, characterDim.height);
+    //check if player is within a boundary/rectangle
+    if( characterDim.x>= this.boundary.x &&
+      characterDim.x <= this.boundary.x + this.boundary.width &&
+      characterDim.y >= this.boundary.y &&
+      characterDim.y <= this.boundary.y + this.boundary.height){
         
-      }*/ 
+      }// correr todos os quadrantes que player esteja inserido e  - pode ser feito no check collision =verificar se as linhas desses quadrantes betem no player, retornar essas linhas 
+    /*
+    */ 
   }
 
   queryLine(line, found = []) {
     if (!this.boundary.intersectsLine(line)) {
       return found;
     } else {
-      for (const point of this.points) {
+      for (const line of this.lines) {
         if (line.containsPoint(point)) {
           found.push(point);
         }
