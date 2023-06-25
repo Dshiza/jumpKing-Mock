@@ -21,10 +21,10 @@ class Quadtree {
     const bottomRight = new Rectangle(x + w, y + h, w, h);
 
     // New nodes
-    this.topLeft = new quadtreeTrial(topLeft, this.capacity);
-    this.topRight = new quadtreeTrial(topRight, this.capacity);
-    this.bottomLeft = new quadtreeTrial(bottomLeft, this.capacity);
-    this.bottomRight = new quadtreeTrial(bottomRight, this.capacity);
+    this.topLeft = new Quadtree(topLeft, this.capacity);
+    this.topRight = new Quadtree(topRight, this.capacity);
+    this.bottomLeft = new Quadtree(bottomLeft, this.capacity);
+    this.bottomRight = new Quadtree(bottomRight, this.capacity);
 
     // Does this node have branches?
     this.divided = true;
@@ -51,17 +51,41 @@ class Quadtree {
     }
   }
 
-  query(characterDim, found=[]){
-    let player = new Rectangle(characterDim.x, characterDim.y, characterDim.width, characterDim.height);
+  query(characterDim=[], found=[]){
+    let player = new Rectangle(characterDim[0], characterDim[1], characterDim[2], characterDim[3]);
     //check if player is within a boundary/rectangle
-    if( characterDim.x>= this.boundary.x &&
-      characterDim.x <= this.boundary.x + this.boundary.width &&
-      characterDim.y >= this.boundary.y &&
-      characterDim.y <= this.boundary.y + this.boundary.height){
-        
-      }// correr todos os quadrantes que player esteja inserido e  - pode ser feito no check collision =verificar se as linhas desses quadrantes betem no player, retornar essas linhas 
+    
     /*
-    */ 
+    if(
+      characterDim.x + characterDim.width >= this.boundary.x &&
+      characterDim.x <= this.boundary.x + this.boundary.width &&
+      characterDim.y + characterDim.height >= this.boundary.y &&
+      characterDim.y <= this.boundary.y + this.boundary.height
+      ){
+        found.push(this.lines[0]);
+        found.push(this.lines[1]);
+      }*/
+      if(!this.boundary.intersects(player)){
+        return found;
+      }
+      else{
+        
+        found.push(this.lines[0]);
+        found.push(this.lines[1]);
+        
+      if (this.divided) {
+        
+        this.topLeft.query(characterDim, found);
+        this.topRight.query(characterDim, found);
+        this.bottomLeft.query(characterDim, found);
+        this.bottomRight.query(characterDim, found);
+      }
+     
+      return found;
+      
+    }
+      // correr todos os quadrantes que player esteja inserido e  - pode ser feito no check collision =verificar se as linhas desses quadrantes betem no player, retornar essas linhas 
+
   }
 
   queryLine(line, found = []) {
@@ -140,7 +164,7 @@ class Quadtree {
     );
   }
 
-  traverse(characterPos) {
+  traverse() {
     console.log(this.lines);
     // comparar em relacao aos pontos iniciais das linhas de cada
     //if player position in quadrant return lines
@@ -191,5 +215,5 @@ quad trees, kd-trees, and octrees.
 
 */
 let overallBoundary = new Rectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-let capacity = 30; // Can be various values, usually a good value is the number of elements in the tree, i expect max 30 lines in a specific level
+let capacity = 2; // Can be various values, usually a good value is the number of elements in the tree, i expect max 30 lines in a specific level
 const quadtree = new Quadtree(overallBoundary, capacity);

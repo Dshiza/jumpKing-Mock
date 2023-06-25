@@ -98,3 +98,4 @@ console.log(newLevel.lines);
 levels[0].lines.forEach((line) => {
   quadtree.insert(line);
 });
+

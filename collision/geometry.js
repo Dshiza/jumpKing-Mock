@@ -28,12 +28,11 @@ class Rectangle {
 
   intersects(range) {
     // Check if this rectangle intersects with another rectangle
-    return !(
-      range.x > this.x + this.width ||
-      range.x + range.width < this.x ||
-      range.y > this.y + this.height ||
-      range.y + range.height < this.y
-    );
+    //console.log(range.x, range.width, range.y, range.height);
+    const validation = 
+      range.x <= this.x + this.width && range.x + range.width >= this.x && range.y <= this.y + this.height && range.y + range.height >= this.y;
+    //console.log(validation);
+      return validation;
   }
 
   // Other methods for the Rectangle class can be added as needed
