@@ -59,6 +59,12 @@ class CollisionDetector {
       let isRectWithinLineY =
         characterRect.y < line.y1 &&
         line.y1 < characterRect.y + characterRect.height;
+      if (isRectWithinLineX && isRectWithinLineY) {
+        ctx.fillStyle = "hsl(" + 360 * Math.random() + ", 50%, 50%)";
+        ctx.fillRect(line.x1, line.y1, line.x2 - line.x1, Boundary.height);
+      }
+      console.log(isRectWithinLineX, isRectWithinLineY);
+
       return isRectWithinLineX && isRectWithinLineY;
     }
   }

@@ -184,5 +184,5 @@ quad trees, kd-trees, and octrees.
 
 */
 let overallBoundary = new Rectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-let capacity = 2; // Can be various values, usually a good value is the number of elements in the tree, i expect max 30 lines in a specific level
+let capacity = 30; // Can be various values, usually a good value is the number of elements in the tree, i expect max 30 lines in a specific level
 const quadtree = new Quadtree(overallBoundary, capacity);
