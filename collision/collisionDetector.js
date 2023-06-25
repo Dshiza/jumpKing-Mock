@@ -19,7 +19,7 @@ class CollisionDetector {
 
     // Get the closest point in the quadtree to the character's position
     //const collisions = this.getCollisions(characterRect, playerXQuadrant);
-    console.log(characterRect);
+
     let collisions = [];
     for (let line of playerXQuadrant) {
       if (this.isRectCollidingWith(characterRect, line)) {
@@ -27,13 +27,6 @@ class CollisionDetector {
       }
     }
     console.log(collisions);
-    // Check for collision between the character rectangle and the closest point
-
-    //left
-    //right
-    //top
-    //bottom
-
     // No collision detected
     return false;
   }
@@ -48,7 +41,7 @@ class CollisionDetector {
 
   isRectCollidingWith(characterRect, line) {
     if (line.horizontal) {
-      let isRectWithinLineX =
+      let isRectInLine_x =
         (line.x1 < characterRect.x && characterRect.x < line.x2) ||
         (line.x1 < characterRect.x + characterRect.width &&
           characterRect.x + characterRect.width < line.x2) ||
@@ -56,16 +49,32 @@ class CollisionDetector {
           line.x1 < characterRect.x + characterRect.width) ||
         (characterRect.x < line.x2 &&
           line.x2 < characterRect.x + characterRect.width);
-      let isRectWithinLineY =
+      let isRectInLine_y =
         characterRect.y < line.y1 &&
         line.y1 < characterRect.y + characterRect.height;
+      /*
       if (isRectWithinLineX && isRectWithinLineY) {
         ctx.fillStyle = "hsl(" + 360 * Math.random() + ", 50%, 50%)";
         ctx.fillRect(line.x1, line.y1, line.x2 - line.x1, Boundary.height);
       }
       console.log(isRectWithinLineX, isRectWithinLineY);
+*/
+      return isRectInLine_x && isRectInLine_y;
+    }
+    if (line.vertical) {
+      let isRectInLine_y =
+        (line.y1 < characterRect.y && characterRect.y < line.y2) ||
+        (line.y1 < characterRect.y + characterRect.height &&
+          characterRect.y + characterRect.height < line.y2) ||
+        (characterRect.y < line.y1 &&
+          line.y1 < characterRect.y + characterRect.height) ||
+        (characterRect.y < line.y2 &&
+          line.y2 < characterRect.y + characterRect.height);
+      let isRectInLine_x =
+        characterRect.x < line.x1 &&
+        line.x1 < characterRect.x + characterRect.width;
 
-      return isRectWithinLineX && isRectWithinLineY;
+      return isRectInLine_x && isRectInLine_y;
     }
   }
 

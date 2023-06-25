@@ -44,6 +44,7 @@ for (let i = 0; i < map1_2d.length; i++) {
       }
     }
   }
+  /*
   if (startHorizontal !== null) {
     const endHorizontal = {
       x: map1_2d[i].length * Boundary.width,
@@ -51,6 +52,7 @@ for (let i = 0; i < map1_2d.length; i++) {
     };
     lines.push(new Line(startHorizontal, endHorizontal));
   }
+  */
 }
 
 //Creating vertical lines
@@ -74,7 +76,7 @@ for (let i = 0; i < map1_2d[0].length; i++) {
       }
     }
   }
-
+  /*
   if (startVertical !== null) {
     const endVertical = {
       x: i * Boundary.width,
@@ -82,6 +84,7 @@ for (let i = 0; i < map1_2d[0].length; i++) {
     };
     lines.push(new Line(startVertical, endVertical));
   }
+  */
 }
 
 // NEED CODE FOR DIAGONAL LINES MOST LIKELY, will see when it appears in maps
@@ -92,10 +95,11 @@ newLevel.lines = lines.filter((element) => {
 levels.push(newLevel);
 //is this it
 //console.log("is this it");
+newLevel.lines.splice(4, 5); // 14 nao
+newLevel.lines.splice(8, 1);
 console.log(newLevel.lines);
 
 // Insert the lines into the quadtree.
 levels[0].lines.forEach((line) => {
   quadtree.insert(line);
 });
-
