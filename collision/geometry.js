@@ -29,10 +29,13 @@ class Rectangle {
   intersects(range) {
     // Check if this rectangle intersects with another rectangle
     //console.log(range.x, range.width, range.y, range.height);
-    const validation = 
-      range.x <= this.x + this.width && range.x + range.width >= this.x && range.y <= this.y + this.height && range.y + range.height >= this.y;
+    const validation =
+      range.x <= this.x + this.width &&
+      range.x + range.width >= this.x &&
+      range.y <= this.y + this.height &&
+      range.y + range.height >= this.y;
     //console.log(validation);
-      return validation;
+    return validation;
   }
 
   // Other methods for the Rectangle class can be added as needed
@@ -75,11 +78,11 @@ class Line {
   // If i want to apply width and height with x1,x2,y1,y2
   // I need to make points in order because fillRect treats width and height as absolute values - "No backwards rectangles"
   drawVertical(width) {
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "green";
     ctx.fillRect(this.x1, this.y1, width, this.y2 - this.y1);
   }
   drawHorizontal(height) {
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "blue";
     ctx.fillRect(this.x1, this.y1, this.x2 - this.x1, height);
   }
 }

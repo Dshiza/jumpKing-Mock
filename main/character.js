@@ -65,7 +65,6 @@ class Character {
     this.movingRight = false;
     this.movingLeft = false;
     this.jumping = false;
-    
   }
   // It wil have the image for the character , needs refactoring because it updates to draw
   // But character will have a crouching position
@@ -161,11 +160,12 @@ class Character {
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
       //console.log(boundary.vertical + boundary.horizontal);
-      if (boundary.vertical) {
-        boundary.drawVertical(Boundary.width);
-      }
+
       if (boundary.horizontal) {
         boundary.drawHorizontal(Boundary.height);
+      }
+      if (boundary.vertical) {
+        boundary.drawVertical(Boundary.width);
       }
     }
   }
@@ -200,10 +200,7 @@ class Character {
     this.applyGravity();
     //tests
     this.handleCollision(levels[0].lines);
-    const playerXQuadrant = quadtree.query([this.x, this.y, this.width, this.height]);
-    for(let i of playerXQuadrant) console.log(i);
-    console.log("for done");
-    /* NEEDS TO BE ACTIVATED
+
     const collision = collisionDetector.checkCollision(
       this.x,
       this.y,
@@ -214,7 +211,7 @@ class Character {
     if (collision) {
       // Handle collision based on the specific requirements of your game
       // Adjust character's position, velocity, trigger animations, etc.
-    }*/
+    }
     // console.log("this.y=" + this.y + "this.x=" + this.x);
     // Draw lines of level
     this.drawBoundaries(levels[0].lines);

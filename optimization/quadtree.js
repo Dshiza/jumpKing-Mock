@@ -51,10 +51,9 @@ class Quadtree {
     }
   }
 
-  query(characterDim=[], found=[]){
-    let player = new Rectangle(characterDim[0], characterDim[1], characterDim[2], characterDim[3]);
+  query(characterRect, found = []) {
     //check if player is within a boundary/rectangle
-    
+
     /*
     if(
       characterDim.x + characterDim.width >= this.boundary.x &&
@@ -65,27 +64,22 @@ class Quadtree {
         found.push(this.lines[0]);
         found.push(this.lines[1]);
       }*/
-      if(!this.boundary.intersects(player)){
-        return found;
-      }
-      else{
-        
-        found.push(this.lines[0]);
-        found.push(this.lines[1]);
-        
-      if (this.divided) {
-        
-        this.topLeft.query(characterDim, found);
-        this.topRight.query(characterDim, found);
-        this.bottomLeft.query(characterDim, found);
-        this.bottomRight.query(characterDim, found);
-      }
-     
+    if (!this.boundary.intersects(characterRect)) {
       return found;
-      
-    }
-      // correr todos os quadrantes que player esteja inserido e  - pode ser feito no check collision =verificar se as linhas desses quadrantes betem no player, retornar essas linhas 
+    } else {
+      for (let line of this.lines) {
+        if (line) found.push(line);
+      }
+      if (this.divided) {
+        this.topLeft.query(characterRect, found);
+        this.topRight.query(characterRect, found);
+        this.bottomLeft.query(characterRect, found);
+        this.bottomRight.query(characterRect, found);
+      }
 
+      return found;
+    }
+    // correr todos os quadrantes que player esteja inserido e  - pode ser feito no check collision =verificar se as linhas desses quadrantes betem no player, retornar essas linhas
   }
 
   queryLine(line, found = []) {
@@ -107,31 +101,6 @@ class Quadtree {
 
       return found;
     }
-  }
-
-  // Get the closest point on a line to the player's position.
-  getClosestLine(line) {
-    const dx = line.x2 - line.x1;
-    const dy = line.y2 - line.y1;
-    const t =
-      ((this.x - line.x1) * dx + (this.y - line.y1) * dy) / (dx * dx + dy * dy);
-
-    if (t < 0) {
-      return { x: line.x1, y: line.y1 };
-    } else if (t > 1) {
-      return { x: line.x2, y: line.y2 };
-    } else {
-      const x = line.x1 + t * dx;
-      const y = line.y1 + t * dy;
-      return { x, y };
-    }
-  }
-
-  // Get the distance between two points.
-  getDistance(x1, y1, x2, y2) {
-    const dx = x2 - x1;
-    const dy = y2 - y1;
-    return Math.sqrt(dx * dx + dy * dy);
   }
 
   divise(func, params = [], operator = "||") {
@@ -169,7 +138,7 @@ class Quadtree {
     // comparar em relacao aos pontos iniciais das linhas de cada
     //if player position in quadrant return lines
     //if player
-    
+
     if (this.divided) {
       this.topLeft.traverse();
       this.topRight.traverse();
