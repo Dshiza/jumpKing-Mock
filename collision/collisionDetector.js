@@ -26,9 +26,39 @@ class CollisionDetector {
         collisions.push(line);
       }
     }
-    console.log(collisions);
+
+    let collisionInfo;
+    // checking if it has hitten a horizontal line, player will decide if it was moving down or up and act accordingly
+    if (collisions.length == 1) {
+      if (collisions[0].horizontal) {
+      }
+      collisionInfo = {
+        lines: collisions[0],
+        type: "ceilingOrGround",
+      };
+      if (collisions[0].vertical) {
+      }
+      collisionInfo = {
+        lines: collisions[0],
+        type: "wall",
+      };
+    }
+    //if it has hitten a corner
+    else if (collisions.length == 2) {
+      if (
+        (collisions[0].horizontal && collisions[1].vertical) ||
+        (collisions[0].vertical && collisions[1].horizontal)
+      ) {
+        collisionInfo = {
+          lines: collisions,
+          type: "wallAndCeilingOrGround",
+        };
+      }
+    } else return false;
+    //console.log(characterRect);
+    //console.log(collisions);
     // No collision detected
-    return false;
+    return collisionInfo;
   }
 
   // Get the closest point on a line to the player's position.
