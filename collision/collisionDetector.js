@@ -31,17 +31,17 @@ class CollisionDetector {
     // checking if it has hitten a horizontal line, player will decide if it was moving down or up and act accordingly
     if (collisions.length == 1) {
       if (collisions[0].horizontal) {
+        collisionInfo = {
+          lines: collisions[0],
+          type: "ceilingOrGround",
+        };
       }
-      collisionInfo = {
-        lines: collisions[0],
-        type: "ceilingOrGround",
-      };
       if (collisions[0].vertical) {
+        collisionInfo = {
+          lines: collisions[0],
+          type: "wall",
+        };
       }
-      collisionInfo = {
-        lines: collisions[0],
-        type: "wall",
-      };
     }
     //if it has hitten a corner
     else if (collisions.length == 2) {
@@ -54,10 +54,8 @@ class CollisionDetector {
           type: "wallAndCeilingOrGround",
         };
       }
-    } else return false;
-    //console.log(characterRect);
-    //console.log(collisions);
-    // No collision detected
+    } else return false; // No collision, collisions array empty
+
     return collisionInfo;
   }
 

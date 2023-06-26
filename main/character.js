@@ -201,18 +201,22 @@ class Character {
     //tests
     this.handleCollision(levels[0].lines);
 
-    const collision = collisionDetector.checkCollision(
+    const collisions = collisionDetector.checkCollision(
       this.x,
       this.y,
       this.width,
       this.height
     );
-
-    if (collision) {
+    console.log(collisions);
+    if (collisions) {
       // Handle collision based on the specific requirements of your game
       // Adjust character's position, velocity, trigger animations, etc.
+      if (collisions.type == "ceilingOrGround" && this.IsMovingDown()) {
+        this.line = collisions.lines;
+        this.onGround = true;
+      }
     }
-    // console.log("this.y=" + this.y + "this.x=" + this.x);
+
     // Draw lines of level
     this.drawBoundaries(levels[0].lines);
     this.draw();
