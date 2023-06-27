@@ -65,6 +65,7 @@ class Character {
     this.movingRight = false;
     this.movingLeft = false;
     this.jumping = false;
+    this.line = CANVAS_HEIGHT;
   }
   // It wil have the image for the character , needs refactoring because it updates to draw
   // But character will have a crouching position
@@ -82,8 +83,9 @@ class Character {
     } else {
       this.velocity.y = 0;
       this.acceleration.y = 0;
-      this.y = CANVAS_HEIGHT - this.height;
+      this.y = this.line - this.height;
       this.onGround = true;
+      
     }
   }
 
@@ -97,6 +99,7 @@ class Character {
 
   moveRight() {
     if (this.movingRight && !this.jumpHeld) {
+      
       this.velocity.x = 10;
     } else if (this.jumpHeld && this.movingRight) {
       this.velocity.x = 0;
@@ -191,7 +194,7 @@ class Character {
     //this.velocity.y += this.aceleration.y;
 
     this.y += this.velocity.y;
-
+    
     // TODO: Needs Refactoring
     this.velocity.x = 0;
     this.moveLeft();
@@ -202,19 +205,52 @@ class Character {
     this.handleCollision(levels[0].lines);
 
     const collisions = collisionDetector.checkCollision(
-      this.x,
+      this.x+this.velocity.x,
       this.y,
       this.width,
-      this.height
+      this.height, 
+      
     );
-    console.log(collisions);
+    
     if (collisions) {
+      
       // Handle collision based on the specific requirements of your game
       // Adjust character's position, velocity, trigger animations, etc.
       if (collisions.type == "ceilingOrGround" && this.IsMovingDown()) {
-        this.line = collisions.lines;
+        console.log(collisions.lines.x1);
+        this.line = collisions.lines.y1;
+        
         this.onGround = true;
+       
+        
       }
+      if (collisions.type == "wall" && this.IsMovingLeft()) {
+        
+        this.velocity.x=0;   
+                 
+      }
+      if (collisions.type == "wall" && this.IsMovingRight()) {
+        this.velocity.x=0;            
+      }
+      if (collisions.type == "wallAndCeilingOrGround" && this.IsMovingRight() && this.IsMovingUp()) {
+        this.velocity.x=0;             
+      }
+      if (collisions.type == "wallAndCeilingOrGround" && this.IsMovingRight() && this.IsMovingDown()) {
+        this.velocity.x=0;
+        //this.onGround=true;
+        this.line = collisions[0].lines.horizontal==true?collisions[0].lines.y1:collisions[1].lines.y1;        
+      }
+      if (collisions.type == "wallAndCeilingOrGround" && this.IsMovingLeft() && this.IsMovingUp()) {
+        this.velocity.x=0;             
+      }
+      if (collisions.type == "wallAndCeilingOrGround" && this.IsMovingLeft() && this.IsMovingDown()) {
+        this.velocity.x=0;
+        //this.onGround=true;
+        this.line = collisions[0].lines.horizontal==true?collisions[0].lines.y1:collisions[1].lines.y1;        
+      }
+
+
+
     }
 
     // Draw lines of level

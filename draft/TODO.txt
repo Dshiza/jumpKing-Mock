@@ -10,3 +10,5 @@ Major:
     - ponto initial e ponto inicial + final dao linha se intercetar
     - 
 
+Intead of remembering last line for ground it needs to detect the next collision/ keep free fall
+
