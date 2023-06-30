@@ -37,8 +37,6 @@ class Rectangle {
     //console.log(validation);
     return validation;
   }
-
-  // Other methods for the Rectangle class can be added as needed
 }
 
 //Line should be hereditate using extends

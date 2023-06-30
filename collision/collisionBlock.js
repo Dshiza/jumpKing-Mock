@@ -14,8 +14,6 @@ class CollisionBlock {
     ctx.fill();*/
   }
 
-  rectangle() {}
-
   line() {
     ctx.beginPath();
     ctx.moveTo(this.lines[0].x1, this.lines[0].y1);

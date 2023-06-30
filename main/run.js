@@ -66,10 +66,12 @@ window.addEventListener("keydown", (event) => {
       break;
     case " ":
       console.log("Jump!");
-      if (jumpStartTime === null) {
+      if (jumpStartTime === null && character.onGround) {
         jumpStartTime = Date.now();
         //console.log("just pressed" + jumpStartTime);
+
         keys.Space.pressed = true;
+        keys.Space.released = false;
       }
       break;
   }
@@ -86,13 +88,14 @@ window.addEventListener("keyup", (event) => {
 
       break;
     case " ":
-      if (jumpStartTime !== null) {
+      if (jumpStartTime !== null && character.onGround) {
         const jumpEndTime = Date.now();
-        jumpDuration = jumpEndTime - jumpStartTime;
+        jumpDuration = Math.max(jumpEndTime - jumpStartTime, 200);
         keys.Space.pressed = false;
         keys.Space.released = true;
         character.onGround = false;
-        //console.log("after release - " + jumpDuration);
+        console.log("after release - " + jumpDuration);
+
         jumpStartTime = null;
       }
 
